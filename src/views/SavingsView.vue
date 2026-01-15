@@ -184,7 +184,7 @@ function getGoalProgress(goal: any) {
       v-if="completedGoals.length > 0"
       class="goals-section completed-section"
     >
-      <h2>✅ {{ t.savingsView.completedGoals }}</h2>
+      <h2>{{ t.savingsView.completedGoals }}</h2>
       <div class="goals-list">
         <div
           v-for="goal in completedGoals"

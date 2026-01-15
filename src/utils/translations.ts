@@ -16,6 +16,8 @@ export const translations: Record<Language, any> = {
       cancel: "Cancelar",
       confirm: "Confirmar",
       of: "de",
+      success: "Éxito",
+      error: "Error",
     },
     budgetStatus: {
       overBy: "Excedido por",
@@ -162,6 +164,7 @@ export const translations: Record<Language, any> = {
       placeholder: "Ingresa una descripción...",
       cancel: "Cancelar",
       submit: "Agregar Gasto",
+      success: "Gasto registrado exitosamente",
       warning: {
         title: "Atención",
         text: "El gasto en {category} excede tu presupuesto asignado. Esto reducirá tus ahorros en {amount}",
@@ -216,6 +219,8 @@ export const translations: Record<Language, any> = {
       cancel: "Cancel",
       confirm: "Confirm",
       of: "of",
+      success: "Success",
+      error: "Error",
     },
     budgetStatus: {
       overBy: "Over by",
@@ -363,6 +368,7 @@ export const translations: Record<Language, any> = {
       placeholder: "Enter a description...",
       cancel: "Cancel",
       submit: "Add Expense",
+      success: "Expense recorded successfully",
       warning: {
         title: "Attention",
         text: "Spending in {category} exceeds your allocated budget. This action will reduce your savings by {amount}",
