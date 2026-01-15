@@ -78,13 +78,13 @@ async function validateAndSubmit() {
   if (availableSavings >= requiredFromSavings) {
     const result = await Swal.fire({
       icon: "warning",
-      title: t.expenseModal.warning.title,
-      text: t.expenseModal.warning.text
+      title: t.value.expenseModal.warning.title,
+      text: t.value.expenseModal.warning.text
         .replace("{category}", category.name)
         .replace("{amount}", formatCompactCurrency(requiredFromSavings)),
       showCancelButton: true,
-      confirmButtonText: t.expenseModal.warning.useSavings,
-      cancelButtonText: t.expenseModal.cancel,
+      confirmButtonText: t.value.expenseModal.warning.useSavings,
+      cancelButtonText: t.value.expenseModal.cancel,
     });
 
     if (result.isConfirmed) {
@@ -99,8 +99,8 @@ async function validateAndSubmit() {
   if (!goals.length) {
     await Swal.fire({
       icon: "error",
-      title: t.common.error,
-      text: t.expenseModal.warning.noSavings.replace(
+      title: t.value.common.error,
+      text: t.value.expenseModal.warning.noSavings.replace(
         "{amount}",
         formatCompactCurrency(neededFromGoal)
       ),
@@ -110,8 +110,8 @@ async function validateAndSubmit() {
 
   const { value: goalId } = await Swal.fire({
     icon: "warning",
-    title: t.expenseModal.goalSelection.title,
-    text: t.expenseModal.goalSelection.text.replace(
+    title: t.value.expenseModal.goalSelection.title,
+    text: t.value.expenseModal.goalSelection.text.replace(
       "{amount}",
       formatCompactCurrency(neededFromGoal)
     ),
@@ -122,10 +122,10 @@ async function validateAndSubmit() {
         `${g.name} (${formatCompactCurrency(g.currentAmount)})`,
       ])
     ),
-    inputPlaceholder: t.expenseModal.goalSelection.select,
+    inputPlaceholder: t.value.expenseModal.goalSelection.select,
     showCancelButton: true,
-    confirmButtonText: t.expenseModal.goalSelection.confirm,
-    cancelButtonText: t.expenseModal.cancel,
+    confirmButtonText: t.value.expenseModal.goalSelection.confirm,
+    cancelButtonText: t.value.expenseModal.cancel,
   });
 
   if (!goalId) return;
@@ -152,7 +152,7 @@ function submitExpense(goalId?: string) {
       const toWithdraw = Math.min(availableSavings, amountFromSavings);
       store.withdrawFromSavings(
         toWithdraw,
-        `${t.expenseModal.typeExpense} - ${category.name}`
+        `${t.value.expenseModal.typeExpense} - ${category.name}`
       );
     }
 
@@ -176,8 +176,8 @@ function submitExpense(goalId?: string) {
 
   Swal.fire({
     icon: "success",
-    title: t.common.success,
-    text: t.expenseModal.success,
+    title: t.value.common.success,
+    text: t.value.expenseModal.success,
     timer: 2000,
     showConfirmButton: false,
   });
