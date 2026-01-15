@@ -209,6 +209,45 @@ const user = {
       </div>
 
       <div class="sidebar-footer">
+        <!-- Mobile Controls (Theme & Language) -->
+        <div class="mobile-controls">
+          <button
+            class="icon-btn theme-toggle"
+            @click="toggleTheme"
+            :title="t.a11y.themeToggle"
+            :aria-label="t.a11y.themeToggle"
+          >
+            <i :class="themeIcon" aria-hidden="true"></i>
+            <span
+              class="mode-badge"
+              v-if="themeMode === 'system'"
+              aria-hidden="true"
+              >A</span
+            >
+          </button>
+
+          <button
+            class="icon-btn language-toggle"
+            @click="toggleLanguage"
+            :title="t.a11y.langToggle"
+            :aria-label="t.a11y.langToggle"
+          >
+            <span class="lang-text" aria-hidden="true">{{
+              langMode === "system" ? "SYS" : langMode
+            }}</span>
+          </button>
+        </div>
+
+        <!-- Logout Button -->
+        <button
+          class="logout-button"
+          @click="handleLogout"
+          :aria-label="t.a11y.logout"
+        >
+          <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+          <span>{{ t.a11y.logout }}</span>
+        </button>
+
         <p class="copyright">© 2026 FinanceApp</p>
       </div>
     </aside>
@@ -247,7 +286,7 @@ const user = {
         <div class="header-right">
           <!-- Theme Toggle -->
           <button
-            class="icon-btn theme-toggle"
+            class="icon-btn theme-toggle desktop-only"
             @click="toggleTheme"
             :title="t.a11y.themeToggle"
             :aria-label="t.a11y.themeToggle"
@@ -263,7 +302,7 @@ const user = {
 
           <!-- Language Toggle -->
           <button
-            class="icon-btn language-toggle"
+            class="icon-btn language-toggle desktop-only"
             @click="toggleLanguage"
             :title="t.a11y.langToggle"
             :aria-label="t.a11y.langToggle"
@@ -281,14 +320,6 @@ const user = {
               class="profile-avatar border-2 border-primary"
             />
             <span class="profile-name">{{ user.name }}</span>
-            <button
-              class="icon-btn logout-btn"
-              @click="handleLogout"
-              :title="t.a11y.logout"
-              :aria-label="t.a11y.logout"
-            >
-              <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
-            </button>
           </div>
         </div>
       </header>
@@ -307,7 +338,6 @@ const user = {
 
 <style scoped>
 .app-container {
-  display: flex;
   width: 100%;
   min-height: 100vh;
   background: var(--bg-primary);
@@ -318,16 +348,16 @@ const user = {
 /* Skip Link */
 .skip-link {
   position: absolute;
-  top: -40px;
+  top: -2.5rem;
   left: 0;
   background: var(--primary-color);
   color: white;
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
   z-index: 2000;
   transition: top 0.2s;
   text-decoration: none;
   font-weight: 600;
-  border-radius: 0 0 8px 0;
+  border-radius: 0 0 0.5rem 0;
 }
 
 .skip-link:focus {
@@ -336,7 +366,7 @@ const user = {
 
 /* Sidebar Styling */
 .sidebar {
-  width: 260px;
+  width: 16.25rem;
   background: var(--bg-secondary);
   border-right: 1px solid var(--border-color);
   display: flex;
@@ -350,20 +380,20 @@ const user = {
 }
 
 .sidebar-header {
-  padding: 24px;
+  padding: 1.5rem;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
   font-weight: 800;
-  font-size: 20px;
+  font-size: 1.25rem;
   color: var(--text-primary);
   border-bottom: 1px solid var(--border-color);
 }
 
 .brand-icon {
   color: var(--primary-color);
-  font-size: 24px;
-  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.3));
+  font-size: 1.5rem;
+  filter: drop-shadow(0 0 0.5rem rgba(16, 185, 129, 0.3));
 }
 
 .close-sidebar-btn {
@@ -371,32 +401,32 @@ const user = {
   background: none;
   border: none;
   color: var(--text-secondary);
-  font-size: 20px;
+  font-size: 1.25rem;
   cursor: pointer;
   display: none; /* Only show on mobile */
 }
 
 .sidebar-content {
   flex: 1;
-  padding: 24px 16px;
+  padding: 1.5rem 1rem;
   overflow-y: auto;
 }
 
 .nav-links {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .nav-link {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
   background: none;
   border: none;
-  border-radius: 12px;
-  font-size: 15px;
+  border-radius: 0.75rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   color: var(--text-secondary);
   cursor: pointer;
@@ -408,7 +438,7 @@ const user = {
 .nav-link:hover {
   background: rgba(255, 255, 255, 0.03);
   color: var(--text-primary);
-  transform: translateX(4px);
+  transform: translateX(0.25rem);
 }
 
 .nav-link.active {
@@ -418,14 +448,14 @@ const user = {
 }
 
 .nav-icon {
-  width: 24px;
+  width: 1.5rem;
   text-align: center;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .sidebar-footer {
-  padding: 16px;
-  font-size: 12px;
+  padding: 1rem;
+  font-size: 0.75rem;
   color: var(--text-secondary);
   text-align: center;
   border-top: 1px solid var(--border-color);
@@ -434,7 +464,7 @@ const user = {
 /* Main Wrapper Styling */
 .main-wrapper {
   flex: 1;
-  margin-left: 260px; /* Width of sidebar */
+  margin-left: 16.25rem; /* Width of sidebar */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -447,27 +477,27 @@ const user = {
 
 /* Header Styling */
 .top-header {
-  height: 70px;
+  height: 4.375rem;
   background: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 32px;
+  padding: 0 2rem;
   position: sticky;
   top: 0;
   z-index: 900;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(0.5rem);
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 1rem;
 }
 
 .current-page-title {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
   color: var(--text-primary);
   display: none;
@@ -483,7 +513,7 @@ const user = {
   display: none;
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 1.25rem;
   color: var(--text-primary);
   cursor: pointer;
 }
@@ -491,13 +521,13 @@ const user = {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 1rem;
 }
 
 .icon-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.625rem;
   border: 1px solid var(--border-color);
   background: var(--button-bg, transparent);
   color: var(--text-primary);
@@ -506,53 +536,105 @@ const user = {
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 16px;
+  font-size: 1rem;
   position: relative; /* For badge positioning */
 }
 
 .mode-badge {
   position: absolute;
-  bottom: -2px;
-  right: -2px;
+  bottom: -0.125rem;
+  right: -0.125rem;
   background: var(--primary-color);
   color: white;
-  font-size: 8px;
+  font-size: 0.5rem;
   font-weight: bold;
-  padding: 2px 4px;
-  border-radius: 4px;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
   line-height: 1;
 }
 
 .icon-btn:hover {
   background: var(--hover-bg);
-  transform: translateY(-2px);
+  transform: translateY(-0.125rem);
 }
 
 .lang-text {
   font-weight: 700;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .profile-section {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding-left: 12px;
+  gap: 0.75rem;
+  padding-left: 0.75rem;
   border-left: 1px solid var(--border-color);
-  margin-left: 8px;
+  margin-left: 0.5rem;
 }
 
 .profile-avatar {
-  width: 36px;
-  height: 36px;
+  width: 2.25rem;
+  height: 2.25rem;
   border-radius: 50%;
   object-fit: cover;
 }
 
 .profile-name {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-primary);
+}
+
+/* Sidebar Footer Styles */
+.sidebar-footer {
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mobile-controls {
+  display: none;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.logout-button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-0.125rem);
+}
+
+.logout-button i {
+  font-size: 1rem;
+}
+
+.copyright {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* Desktop-only controls */
+.desktop-only {
+  display: flex;
 }
 
 /* Main Content Styling */
@@ -564,24 +646,33 @@ const user = {
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
-    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0.3125rem 0 0.9375rem rgba(0, 0, 0, 0.1);
   }
 
   .sidebar.mobile-hidden {
     transform: translateX(-100%);
   }
 
+  /* Show mobile controls in sidebar */
+  .mobile-controls {
+    display: flex;
+  }
+
+  /* Hide desktop controls in header */
+  .desktop-only {
+    display: none !important;
+  }
 }
 
 /* Re-override for correct mobile logic with Vue state */
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
-    width: 280px;
+    width: 17.5rem;
   }
 
   .sidebar {
-    transform: translateX(0); 
+    transform: translateX(0);
   }
 
   .sidebar.mobile-hidden {
@@ -605,11 +696,11 @@ const user = {
   }
 
   .main-content {
-    padding: 16px;
+    padding: 1rem;
   }
 
   .top-header {
-    padding: 0 16px;
+    padding: 0 1rem;
   }
 }
 
@@ -621,11 +712,11 @@ const user = {
 
 .page-enter-from {
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(0.625rem);
 }
 
 .page-leave-to {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(-0.625rem);
 }
 </style>

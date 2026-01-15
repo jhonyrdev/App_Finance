@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, inject } from "vue";
 import { COLORS } from "../utils/constants";
-import { formatCurrency } from "../utils/calculations";
+import { formatCompactCurrency } from "../utils/calculations";
 import type { TransactionType } from "../types";
 
 interface Props {
@@ -46,7 +46,7 @@ const statusColor = computed(() => {
 });
 
 const formattedAmount = computed(() => {
-  return formatCurrency(props.amount);
+  return formatCompactCurrency(props.amount);
 });
 
 function handleKeydown(e: KeyboardEvent) {
@@ -122,8 +122,8 @@ const cardAriaLabel = computed(() => {
 <style scoped>
 .dashboard-card {
   background: var(--bg-secondary);
-  border-radius: 16px;
-  padding: 24px;
+  border-radius: 1rem;
+  padding: 1.5rem;
   color: var(--text-primary);
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -138,7 +138,7 @@ const cardAriaLabel = computed(() => {
   position: absolute;
   top: 0;
   left: 0;
-  width: 4px;
+  width: 0.25rem;
   height: 100%;
   background: var(--accent-color);
   opacity: 0.8;
@@ -146,13 +146,13 @@ const cardAriaLabel = computed(() => {
 }
 
 .dashboard-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-0.25rem);
   border-color: var(--accent-color);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0.625rem 1.875rem -0.625rem rgba(0, 0, 0, 0.5);
 }
 
 .dashboard-card:hover .accent-bar {
-  width: 6px;
+  width: 0.375rem;
   opacity: 1;
 }
 
@@ -160,11 +160,11 @@ const cardAriaLabel = computed(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .card-title {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   margin: 0;
   color: var(--text-secondary);
@@ -173,21 +173,21 @@ const cardAriaLabel = computed(() => {
 }
 
 .card-icon-wrapper {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
   background: rgba(255, 255, 255, 0.03);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--accent-color);
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .card-amount {
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
   color: var(--text-primary);
   letter-spacing: -0.5px;
 }
@@ -195,30 +195,30 @@ const cardAriaLabel = computed(() => {
 .card-status-info {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .status-indicator {
-  width: 6px;
-  height: 6px;
+  width: 0.375rem;
+  height: 0.375rem;
   border-radius: 50%;
   background-color: var(--status-color);
-  box-shadow: 0 0 8px var(--status-color);
+  box-shadow: 0 0 0.5rem var(--status-color);
 }
 
 .status-text {
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 500;
   color: var(--text-secondary);
 }
 
 @media (max-width: 768px) {
   .dashboard-card {
-    padding: 20px;
+    padding: 1.25rem;
   }
 
   .card-amount {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 }
 </style>

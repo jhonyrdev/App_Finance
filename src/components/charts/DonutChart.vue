@@ -100,15 +100,16 @@ const chartOptions: ChartOptions<"doughnut"> = {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 300px;
+  min-height: 18.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  container-type: inline-size;
 }
 
 @media (max-width: 768px) {
   .chart-container {
-    min-height: 250px;
+    min-height: 15.625rem;
   }
 }
 </style>

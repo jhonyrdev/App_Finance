@@ -54,12 +54,13 @@ function handleKeydown(e: KeyboardEvent, category: Category) {
 <style scoped>
 .category-list {
   width: 100%;
+  container-type: inline-size;
 }
 
 .categories-grid {
   display: grid;
-  gap: 16px;
-  margin-top: 16px;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 .category-wrapper {
@@ -68,23 +69,23 @@ function handleKeydown(e: KeyboardEvent, category: Category) {
 }
 
 .category-wrapper:hover {
-  transform: translateX(4px);
+  transform: translateX(0.25rem);
 }
 
 .empty-state {
   text-align: center;
-  padding: 48px 24px;
+  padding: 3rem 1.5rem;
   color: var(--text-secondary);
 }
 
 .empty-state p {
   margin: 0;
-  font-size: 16px;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
 }
 
 @media (max-width: 768px) {
   .categories-grid {
-    gap: 12px;
+    gap: 0.75rem;
   }
 }
 </style>

@@ -2,7 +2,7 @@
 import { ref, computed, inject } from "vue";
 import Swal from "sweetalert2";
 import { useFinanceStore } from "../stores/financeStore";
-import { formatCurrency } from "../utils/calculations";
+import { formatCompactCurrency } from "../utils/calculations";
 import type { TransactionType } from "../types";
 import CustomSelect from "./CustomSelect.vue";
 
@@ -81,7 +81,7 @@ async function validateAndSubmit() {
       title: t.expenseModal.warning.title,
       text: t.expenseModal.warning.text
         .replace("{category}", category.name)
-        .replace("{amount}", formatCurrency(requiredFromSavings)),
+        .replace("{amount}", formatCompactCurrency(requiredFromSavings)),
       showCancelButton: true,
       confirmButtonText: t.expenseModal.warning.useSavings,
       cancelButtonText: t.expenseModal.cancel,
@@ -102,7 +102,7 @@ async function validateAndSubmit() {
       title: t.common.error,
       text: t.expenseModal.warning.noSavings.replace(
         "{amount}",
-        formatCurrency(neededFromGoal)
+        formatCompactCurrency(neededFromGoal)
       ),
     });
     return;
@@ -113,11 +113,14 @@ async function validateAndSubmit() {
     title: t.expenseModal.goalSelection.title,
     text: t.expenseModal.goalSelection.text.replace(
       "{amount}",
-      formatCurrency(neededFromGoal)
+      formatCompactCurrency(neededFromGoal)
     ),
     input: "select",
     inputOptions: Object.fromEntries(
-      goals.map((g) => [g.id, `${g.name} (${formatCurrency(g.currentAmount)})`])
+      goals.map((g) => [
+        g.id,
+        `${g.name} (${formatCompactCurrency(g.currentAmount)})`,
+      ])
     ),
     inputPlaceholder: t.expenseModal.goalSelection.select,
     showCancelButton: true,
@@ -269,30 +272,31 @@ function handleClose() {
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  padding: 20px;
+  padding: 1.25rem;
+  container-type: inline-size;
 }
 
 .modal-content {
   background: var(--bg-secondary);
-  border-radius: 12px;
-  max-width: 500px;
+  border-radius: 0.75rem;
+  max-width: 31.25rem;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.3);
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px;
+  padding: 1.5rem;
   border-bottom: 1px solid var(--border-color);
 }
 
 .modal-header h2 {
   margin: 0;
-  font-size: 24px;
+  font-size: clamp(1.25rem, 4cqi, 1.75rem);
   font-weight: 700;
   color: var(--text-primary);
 }
@@ -300,10 +304,10 @@ function handleClose() {
 .close-button {
   background: transparent;
   border: none;
-  font-size: 24px;
+  font-size: clamp(1.25rem, 4cqi, 1.5rem);
   color: var(--text-secondary);
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 0.25rem 0.5rem;
   border-radius: 4px;
   transition: all 0.2s;
 }
@@ -314,28 +318,28 @@ function handleClose() {
 }
 
 .modal-body {
-  padding: 24px;
+  padding: 1.5rem;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .input-field {
   width: 100%;
-  padding: 10px 14px;
+  padding: 0.625rem 0.875rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: 0.5rem;
   color: var(--text-primary);
-  font-size: 15px;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
   transition: all 0.2s;
   font-family: inherit;
 }
@@ -354,16 +358,16 @@ function handleClose() {
 .modal-footer {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
-  padding: 24px;
+  gap: 0.75rem;
+  padding: 1.5rem;
   border-top: 1px solid var(--border-color);
 }
 
 .button {
-  padding: 10px 24px;
-  border-radius: 8px;
+  padding: 0.625rem 1.5rem;
+  border-radius: 0.5rem;
   font-weight: 600;
-  font-size: 15px;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
   cursor: pointer;
   transition: all 0.2s;
   border: none;
@@ -376,7 +380,7 @@ function handleClose() {
 
 .button-primary:hover:not(:disabled) {
   background: var(--primary-hover);
-  transform: translateY(-1px);
+  transform: translateY(-0.0625rem);
 }
 
 .button-primary:disabled {
@@ -417,13 +421,13 @@ function handleClose() {
 @media (max-width: 640px) {
   .modal-content {
     max-width: 100%;
-    margin: 0 16px;
+    margin: 0 1rem;
   }
 
   .modal-header,
   .modal-body,
   .modal-footer {
-    padding: 16px;
+    padding: 1rem;
   }
 }
 </style>

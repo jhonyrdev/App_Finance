@@ -89,6 +89,7 @@ onUnmounted(() => {
 .custom-select {
   position: relative;
   width: 100%;
+  container-type: inline-size;
 }
 
 .custom-select.disabled {
@@ -100,13 +101,14 @@ onUnmounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
+  padding: 0.75rem 1rem;
   background: var(--input-bg);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.2s;
   user-select: none;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
 }
 
 .select-header:hover:not(.disabled) {
@@ -124,8 +126,8 @@ onUnmounted(() => {
 }
 
 .arrow {
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
   transition: transform 0.2s;
   color: var(--text-secondary);
 }
@@ -142,19 +144,20 @@ onUnmounted(() => {
   background: var(--input-bg);
   border: 1px solid var(--primary-color);
   border-top: none;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  max-height: 250px;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  max-height: 15.625rem;
   overflow-y: auto;
   z-index: 100;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.25rem 0.375rem -0.0625rem rgba(0, 0, 0, 0.1);
 }
 
 .option {
-  padding: 12px 16px;
+  padding: 0.75rem 1rem;
   cursor: pointer;
   transition: all 0.15s;
   color: var(--text-primary);
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
 }
 
 .option:hover {
@@ -174,8 +177,8 @@ onUnmounted(() => {
 }
 
 .option:last-child {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 }
 
 /* Dropdown Animation */

@@ -43,14 +43,13 @@ async function submitIncome() {
   }
 
   if (!t.value?.incomeModal?.swal) {
-  console.error("Translations not loaded properly");
-  store.addIncome(Number(amount.value), description.value);
-  resetForm();
-  emit("confirm");
-  emit("close");
-  return;
-}
-
+    console.error("Translations not loaded properly");
+    store.addIncome(Number(amount.value), description.value);
+    resetForm();
+    emit("confirm");
+    emit("close");
+    return;
+  }
 
   // Mostrar diálogo con SweetAlert2
   const result = await Swal.fire({
@@ -215,20 +214,21 @@ function handleClose() {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(0.25rem);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 20px;
+  padding: 1.25rem;
+  container-type: inline-size;
 }
 
 .modal-content {
   background: var(--modal-bg);
-  border-radius: 20px;
+  border-radius: 1.25rem;
   width: 100%;
-  max-width: 500px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 31.25rem;
+  box-shadow: 0 1.25rem 3.75rem rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
 
@@ -236,13 +236,13 @@ function handleClose() {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px;
+  padding: 1.5rem;
   border-bottom: 1px solid var(--border-color);
 }
 
 .modal-header h2 {
   margin: 0;
-  font-size: 24px;
+  font-size: clamp(1.25rem, 4cqi, 1.75rem);
   font-weight: 700;
   color: var(--text-primary);
 }
@@ -251,7 +251,7 @@ function handleClose() {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
+  padding: 0.5rem;
   color: var(--text-secondary);
   transition: color 0.2s ease;
 }
@@ -261,32 +261,32 @@ function handleClose() {
 }
 
 .close-button svg {
-  width: 24px;
-  height: 24px;
+  width: clamp(1.25rem, 4cqi, 1.5rem);
+  height: clamp(1.25rem, 4cqi, 1.5rem);
 }
 
 .modal-body {
-  padding: 24px;
+  padding: 1.5rem;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   font-weight: 600;
   color: var(--text-primary);
-  font-size: 14px;
+  font-size: clamp(0.8125rem, 2cqi, 0.875rem);
 }
 
 .input-field {
   width: 100%;
-  padding: 12px 16px;
+  padding: 0.75rem 1rem;
   border: 2px solid var(--border-color);
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 0.75rem;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
   color: var(--text-primary);
   background: var(--input-bg);
   transition: all 0.2s ease;
@@ -306,40 +306,40 @@ textarea.input-field {
 .info-note {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 12px;
+  gap: 0.75rem;
+  padding: 0.75rem;
   background: rgba(16, 185, 129, 0.1);
-  border-radius: 12px;
-  margin-top: 16px;
+  border-radius: 0.75rem;
+  margin-top: 1rem;
 }
 
 .info-note svg {
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
   color: var(--primary-color);
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-top: 0.125rem;
 }
 
 .info-note span {
-  font-size: 14px;
+  font-size: clamp(0.8125rem, 2cqi, 0.875rem);
   color: var(--text-secondary);
   line-height: 1.5;
 }
 
 .modal-footer {
   display: flex;
-  gap: 12px;
-  padding: 24px;
+  gap: 0.75rem;
+  padding: 1.5rem;
   border-top: 1px solid var(--border-color);
 }
 
 .button {
   flex: 1;
-  padding: 12px 24px;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 0.75rem;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -357,7 +357,7 @@ textarea.input-field {
 
 .button-primary:hover:not(:disabled) {
   background: #059669;
-  transform: translateY(-1px);
+  transform: translateY(-0.0625rem);
 }
 
 .button-secondary {
@@ -387,7 +387,7 @@ textarea.input-field {
 
 .modal-enter-from .modal-content,
 .modal-leave-to .modal-content {
-  transform: scale(0.95) translateY(20px);
+  transform: scale(0.95) translateY(1.25rem);
 }
 
 @media (max-width: 768px) {
@@ -398,7 +398,7 @@ textarea.input-field {
   .modal-header,
   .modal-body,
   .modal-footer {
-    padding: 20px;
+    padding: 1.25rem;
   }
 }
 </style>

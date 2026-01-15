@@ -5,7 +5,11 @@ import { useFinanceStore } from "../stores/financeStore";
 import DashboardCard from "../components/DashboardCard.vue";
 import ExpenseModal from "../components/ExpenseModal.vue";
 import IncomeModal from "../components/IncomeModal.vue";
-import { formatCurrency, formatRelativeTime } from "../utils/calculations";
+import {
+  formatCurrency,
+  formatRelativeTime,
+  formatCompactCurrency,
+} from "../utils/calculations";
 
 const router = useRouter();
 const store = useFinanceStore();
@@ -94,7 +98,9 @@ function showSetBalance() {
 
       <div v-else class="balance-display">
         <span class="balance-label">{{ t.home.totalBalance }}</span>
-        <h2 class="balance-amount">{{ formatCurrency(store.balance) }}</h2>
+        <h2 class="balance-amount">
+          {{ formatCompactCurrency(store.balance) }}
+        </h2>
       </div>
     </section>
 
@@ -221,61 +227,65 @@ function showSetBalance() {
 
 <style scoped>
 .dashboard {
-  max-width: 1200px;
+  max-width: 75rem;
   margin: 0 auto;
-  padding: 24px;
+  padding: 1.5rem;
+  container-type: inline-size;
+  container-name: dashboard;
 }
 
 .dashboard-header {
-  margin-bottom: 32px;
+  margin-bottom: 2rem;
 }
 
 .header-content h1 {
-  font-size: 32px;
+  font-size: clamp(1.5rem, 4cqi, 2rem);
   font-weight: 800;
-  margin: 0 0 8px 0;
+  margin: 0 0 0.5rem 0;
   color: var(--text-primary);
 }
 
 .subtitle {
   margin: 0;
   color: var(--text-secondary);
-  font-size: 16px;
+  font-size: clamp(0.875rem, 2cqi, 1rem);
 }
 
 .balance-section {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 40px;
-  margin-bottom: 40px;
+  border-radius: 1.25rem;
+  padding: 2.5rem;
+  margin-bottom: 2.5rem;
   text-align: center;
+  container-type: inline-size;
+  container-name: balance;
 }
 
 .balance-setup .empty-balance h2 {
-  font-size: 28px;
-  margin: 0 0 8px 0;
+  font-size: clamp(1.25rem, 5cqi, 1.75rem);
+  margin: 0 0 0.5rem 0;
   color: var(--text-primary);
 }
 
 .balance-setup .empty-balance p {
-  margin: 0 0 24px 0;
+  margin: 0 0 1.5rem 0;
   color: var(--text-secondary);
 }
 
 .balance-input-container {
   display: flex;
-  gap: 12px;
-  max-width: 400px;
+  gap: 0.75rem;
+  max-width: 25rem;
   margin: 0 auto;
 }
 
 .balance-input {
   flex: 1;
-  padding: 14px 20px;
+  padding: 0.875rem 1.25rem;
   border: 2px solid var(--border-color);
-  border-radius: 12px;
-  font-size: 18px;
+  border-radius: 0.75rem;
+  font-size: clamp(1rem, 3cqi, 1.125rem);
   color: var(--text-primary);
   background: var(--input-bg);
 }
@@ -287,7 +297,7 @@ function showSetBalance() {
 }
 
 .balance-display .balance-label {
-  font-size: 14px;
+  font-size: clamp(0.75rem, 2cqi, 0.875rem);
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -295,24 +305,25 @@ function showSetBalance() {
 }
 
 .balance-amount {
-  font-size: 56px;
+  font-size: clamp(1.5rem, 10cqi, 3.5rem);
   font-weight: 800;
-  margin: 12px 0 0 0;
+  margin: 0.75rem 0 0 0;
   color: #10b981;
-  text-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+  text-shadow: 0 0 1.25rem rgba(16, 185, 129, 0.2);
 }
 
 .cards-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  margin-bottom: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .actions-section {
   display: flex;
-  gap: 16px;
-  margin-bottom: 40px;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  container-type: inline-size;
 }
 
 .action-button {
@@ -320,13 +331,13 @@ function showSetBalance() {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 14px 24px;
+  gap: 0.75rem;
+  padding: 0.875rem 1.5rem;
   background: var(--bg-secondary);
   color: var(--text-primary);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  font-size: 15px;
+  border-radius: 0.75rem;
+  font-size: clamp(0.875rem, 3cqi, 0.9375rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -341,17 +352,17 @@ function showSetBalance() {
 .action-button.income:hover {
   transform: translateY(-2px);
   background: var(--primary-hover);
-  box-shadow: 0 8px 20px -5px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0.5rem 1.25rem -0.3125rem rgba(16, 185, 129, 0.4);
 }
 
 .action-button svg {
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .action-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0.25rem 0.75rem rgba(16, 185, 129, 0.3);
 }
 
 .action-button.secondary {
@@ -360,16 +371,16 @@ function showSetBalance() {
 }
 
 .action-button.secondary:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
 }
 
 .button-primary {
-  padding: 14px 32px;
+  padding: 0.875rem 2rem;
   background: var(--primary-color);
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 0.75rem;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -382,62 +393,63 @@ function showSetBalance() {
 
 .transactions-section {
   background: var(--card-bg);
-  border-radius: 20px;
-  padding: 24px;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  container-type: inline-size;
 }
 
 .transactions-section h2 {
-  font-size: 20px;
+  font-size: clamp(1rem, 4cqi, 1.25rem);
   font-weight: 700;
-  margin: 0 0 20px 0;
+  margin: 0 0 1.25rem 0;
   color: var(--text-primary);
 }
 
 .transactions-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .transaction-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
+  padding: 1rem;
   background: var(--input-bg);
-  border-radius: 12px;
+  border-radius: 0.75rem;
   transition: all 0.2s ease;
 }
 
 .transaction-item:hover {
-  transform: translateX(4px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transform: translateX(0.25rem);
+  box-shadow: 0 2px 0.5rem rgba(0, 0, 0, 0.05);
 }
 
 .transaction-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.25rem;
 }
 
 .transaction-category {
   font-weight: 600;
   color: var(--text-primary);
-  font-size: 15px;
+  font-size: clamp(0.875rem, 2.5vw, 0.9375rem);
 }
 
 .transaction-description {
-  font-size: 13px;
+  font-size: clamp(0.75rem, 2vw, 0.8125rem);
   color: var(--text-secondary);
 }
 
 .transaction-date {
-  font-size: 12px;
+  font-size: clamp(0.6875rem, 1.5vw, 0.75rem);
   color: var(--text-secondary);
 }
 
 .transaction-amount {
-  font-size: 18px;
+  font-size: clamp(0.875rem, 2.5vw, 1.125rem);
   font-weight: 700;
   color: #ef4444;
 }
@@ -445,15 +457,15 @@ function showSetBalance() {
 /* Floating Action Button */
 .fab {
   position: fixed;
-  bottom: 32px;
-  right: 32px;
-  width: 64px;
-  height: 64px;
+  bottom: 2rem;
+  right: 2rem;
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
   background: linear-gradient(135deg, #f97316, #ea580c);
   color: white;
   border: none;
-  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.4);
+  box-shadow: 0 0.5rem 1.5rem rgba(249, 115, 22, 0.4);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -464,7 +476,7 @@ function showSetBalance() {
 
 .fab:hover {
   transform: scale(1.1);
-  box-shadow: 0 12px 32px rgba(249, 115, 22, 0.5);
+  box-shadow: 0 0.75rem 2rem rgba(249, 115, 22, 0.5);
 }
 
 .fab:active {
@@ -472,8 +484,8 @@ function showSetBalance() {
 }
 
 .fab svg {
-  width: 28px;
-  height: 28px;
+  width: 1.75rem;
+  height: 1.75rem;
 }
 
 .distribution-info {
@@ -483,43 +495,43 @@ function showSetBalance() {
     rgba(5, 150, 105, 0.1)
   );
   border: 2px solid rgba(16, 185, 129, 0.2);
-  border-radius: 16px;
-  padding: 16px 20px;
-  margin-bottom: 32px;
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
 }
 
 .info-header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
   color: var(--text-primary);
   font-weight: 600;
-  font-size: 14px;
+  font-size: clamp(0.8125rem, 2vw, 0.875rem);
 }
 
 .info-header svg {
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
   color: var(--primary-color);
   flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
   .dashboard {
-    padding: 16px;
+    padding: 1rem;
   }
 
   .dashboard-header h1 {
-    font-size: 24px;
+    font-size: clamp(1.25rem, 5vw, 1.5rem);
   }
 
   .balance-amount {
-    font-size: 36px;
+    font-size: clamp(1.75rem, 8cqi, 2.25rem);
   }
 
   .cards-section {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 1rem;
   }
 
   .actions-section {
@@ -528,7 +540,23 @@ function showSetBalance() {
   .balance-input-container {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 357px) {
+  .dashboard-header h1 {
+    font-size: clamp(1.125rem, 6vw, 1.5rem);
+  }
+
+  .balance-amount {
+    font-size: clamp(1.25rem, 12cqi, 2.5rem);
+  }
+}
+
+@container balance (max-width: 400px) {
+  .balance-amount {
+    font-size: clamp(1rem, 10cqi, 2rem);
   }
 }
 </style>
