@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, inject } from "vue";
+import { computed, ref, inject } from "vue";
+import type { ComputedRef } from "vue";
 import { useRouter } from "vue-router";
 import { useFinanceStore } from "../stores/financeStore";
 import Swal from "sweetalert2";
@@ -16,10 +17,16 @@ const emit = defineEmits<{
 
 const store = useFinanceStore();
 const router = useRouter();
-const t: any = inject("translations");
-
+const t = inject<ComputedRef<any>>(
+  "translations",
+  computed(() => ({}))
+);
 const amount = ref<number | "">("");
 const description = ref("");
+
+if (!t) {
+  throw new Error("Translations provider not found");
+}
 
 async function submitIncome() {
   if (!amount.value) return;
@@ -35,22 +42,31 @@ async function submitIncome() {
     return;
   }
 
+  if (!t.value?.incomeModal?.swal) {
+    console.error("Translations not loaded properly");
+    store.addIncome(Number(amount.value), description.value);
+    resetForm();
+    emit("confirm");
+    emit("close");
+    return;
+  }
+
   // Mostrar diálogo con SweetAlert2
   const result = await Swal.fire({
-    title: t.incomeModal.swal.title,
+    title: t?.value.incomeModal.swal.title,
     html: `
-      <p style="margin-bottom: 20px;">${t.incomeModal.swal.text}</p>
+      <p style="margin-bottom: 20px;">${t?.value.incomeModal.swal.text}</p>
       <div style="background: var(--bg-primary); padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--border-color); color: var(--text-primary);">
         <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-          <span>🏠 ${t.incomeModal.swal.needs}:</span>
+          <span>${t?.value.incomeModal.swal.needs}:</span>
           <strong>${distribution.needs}%</strong>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-          <span>🛒 ${t.incomeModal.swal.expenses}:</span>
+          <span>${t.value.incomeModal.swal.expenses}:</span>
           <strong>${distribution.expenses}%</strong>
         </div>
         <div style="display: flex; justify-content: space-between;">
-          <span>💰 ${t.incomeModal.swal.savings}:</span>
+          <span>${t?.value.incomeModal.swal.savings}:</span>
           <strong>${distribution.savings}%</strong>
         </div>
       </div>
@@ -58,9 +74,9 @@ async function submitIncome() {
     icon: "question",
     showCancelButton: true,
     showDenyButton: true,
-    confirmButtonText: t.incomeModal.swal.continue,
-    denyButtonText: t.incomeModal.swal.config,
-    cancelButtonText: t.incomeModal.swal.cancel,
+    confirmButtonText: t?.value.incomeModal.swal.continue,
+    denyButtonText: t.value.incomeModal.swal.config,
+    cancelButtonText: t?.value.incomeModal.swal.cancel,
     confirmButtonColor: "#10b981",
     denyButtonColor: "#059669",
     cancelButtonColor: "#6b7280",
@@ -69,13 +85,12 @@ async function submitIncome() {
   });
 
   if (result.isConfirmed) {
-    // Continuar: distribuir inmediatamente
     store.addIncome(Number(amount.value), description.value);
     store.distributePendingIncome();
 
     Swal.fire({
-      title: t.incomeModal.swal.successTitle,
-      text: t.incomeModal.swal.successText,
+      title: t?.value.incomeModal.swal.successTitle,
+      text: t.value.incomeModal.swal.successText,
       icon: "success",
       timer: 2000,
       showConfirmButton: false,
@@ -199,20 +214,21 @@ function handleClose() {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(0.25rem);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 20px;
+  padding: 1.25rem;
+  container-type: inline-size;
 }
 
 .modal-content {
   background: var(--modal-bg);
-  border-radius: 20px;
+  border-radius: 1.25rem;
   width: 100%;
-  max-width: 500px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 31.25rem;
+  box-shadow: 0 1.25rem 3.75rem rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
 
@@ -220,13 +236,13 @@ function handleClose() {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px;
+  padding: 1.5rem;
   border-bottom: 1px solid var(--border-color);
 }
 
 .modal-header h2 {
   margin: 0;
-  font-size: 24px;
+  font-size: clamp(1.25rem, 4cqi, 1.75rem);
   font-weight: 700;
   color: var(--text-primary);
 }
@@ -235,7 +251,7 @@ function handleClose() {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
+  padding: 0.5rem;
   color: var(--text-secondary);
   transition: color 0.2s ease;
 }
@@ -245,32 +261,32 @@ function handleClose() {
 }
 
 .close-button svg {
-  width: 24px;
-  height: 24px;
+  width: clamp(1.25rem, 4cqi, 1.5rem);
+  height: clamp(1.25rem, 4cqi, 1.5rem);
 }
 
 .modal-body {
-  padding: 24px;
+  padding: 1.5rem;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   font-weight: 600;
   color: var(--text-primary);
-  font-size: 14px;
+  font-size: clamp(0.8125rem, 2cqi, 0.875rem);
 }
 
 .input-field {
   width: 100%;
-  padding: 12px 16px;
+  padding: 0.75rem 1rem;
   border: 2px solid var(--border-color);
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 0.75rem;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
   color: var(--text-primary);
   background: var(--input-bg);
   transition: all 0.2s ease;
@@ -290,40 +306,40 @@ textarea.input-field {
 .info-note {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 12px;
+  gap: 0.75rem;
+  padding: 0.75rem;
   background: rgba(16, 185, 129, 0.1);
-  border-radius: 12px;
-  margin-top: 16px;
+  border-radius: 0.75rem;
+  margin-top: 1rem;
 }
 
 .info-note svg {
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
   color: var(--primary-color);
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-top: 0.125rem;
 }
 
 .info-note span {
-  font-size: 14px;
+  font-size: clamp(0.8125rem, 2cqi, 0.875rem);
   color: var(--text-secondary);
   line-height: 1.5;
 }
 
 .modal-footer {
   display: flex;
-  gap: 12px;
-  padding: 24px;
+  gap: 0.75rem;
+  padding: 1.5rem;
   border-top: 1px solid var(--border-color);
 }
 
 .button {
   flex: 1;
-  padding: 12px 24px;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 0.75rem;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -335,13 +351,13 @@ textarea.input-field {
 }
 
 .button-primary {
-  background: #10b981;
-  color: white;
+  background: var(--primary-color);
+  color: var(--text-primary-2);
 }
 
 .button-primary:hover:not(:disabled) {
   background: #059669;
-  transform: translateY(-1px);
+  transform: translateY(-0.0625rem);
 }
 
 .button-secondary {
@@ -371,7 +387,7 @@ textarea.input-field {
 
 .modal-enter-from .modal-content,
 .modal-leave-to .modal-content {
-  transform: scale(0.95) translateY(20px);
+  transform: scale(0.95) translateY(1.25rem);
 }
 
 @media (max-width: 768px) {
@@ -382,7 +398,7 @@ textarea.input-field {
   .modal-header,
   .modal-body,
   .modal-footer {
-    padding: 20px;
+    padding: 1.25rem;
   }
 }
 </style>

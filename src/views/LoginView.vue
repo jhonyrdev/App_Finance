@@ -73,12 +73,13 @@ function handleLogin() {
 
 .login-card {
   background: var(--card-bg, #ffffff);
-  padding: 40px;
-  border-radius: 20px;
+  padding: 2.5rem;
+  border-radius: 1.25rem;
   width: 100%;
-  max-width: 400px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  max-width: 25rem;
+  box-shadow: 0 0.625rem 1.5625rem rgba(0, 0, 0, 0.05);
   border: 1px solid var(--border-color);
+  container-type: inline-size;
 }
 
 .dark .login-card {
@@ -87,40 +88,40 @@ function handleLogin() {
 
 .brand {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 2rem;
 }
 
 .brand-icon {
-  font-size: 40px;
+  font-size: clamp(1.875rem, 5vw, 2.75rem);
   color: var(--primary-color, #3b82f6);
-  margin-bottom: 12px;
+  margin-bottom: 0.75rem;
 }
 
-h1 {
-  font-size: 24px;
+.h1 {
+  font-size: clamp(1.25rem, 6cqi, 1.75rem);
   font-weight: 700;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 label {
   display: block;
-  margin-bottom: 8px;
-  font-size: 14px;
+  margin-bottom: 0.5rem;
+  font-size: clamp(0.75rem, 3.5cqi, 0.875rem);
   font-weight: 500;
   color: var(--text-secondary);
 }
 
 input {
   width: 100%;
-  padding: 12px;
-  border-radius: 10px;
+  padding: 0.75rem;
+  border-radius: 0.625rem;
   border: 1px solid var(--border-color);
   background: var(--bg-secondary);
   color: var(--text-primary);
-  font-size: 15px;
+  font-size: clamp(0.8125rem, 3.8cqi, 0.9375rem);
   transition: all 0.2s;
 }
 
@@ -132,19 +133,19 @@ input:focus {
 
 .error-msg {
   color: #ef4444;
-  font-size: 14px;
+  font-size: clamp(0.75rem, 3.5cqi, 0.875rem);
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .login-btn {
   width: 100%;
-  padding: 14px;
+  padding: 0.875rem;
   background: var(--primary-color);
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 0.75rem;
+  font-size: clamp(0.875rem, 4cqi, 1rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;

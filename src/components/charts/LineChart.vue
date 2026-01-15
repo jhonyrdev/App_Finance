@@ -140,12 +140,13 @@ const chartOptions: ChartOptions<"line"> = {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 300px;
+  min-height: 18.75rem;
+  container-type: inline-size;
 }
 
 @media (max-width: 768px) {
   .chart-container {
-    min-height: 250px;
+    min-height: 15.625rem;
   }
 }
 </style>

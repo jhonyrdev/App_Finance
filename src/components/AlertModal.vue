@@ -59,22 +59,23 @@ const emit = defineEmits<{
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(0.25rem);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 20px;
+  padding: 1.25rem;
+  container-type: inline-size;
 }
 
 .alert-content {
   background: var(--modal-bg);
-  border-radius: 20px;
-  padding: 32px;
+  border-radius: 1.25rem;
+  padding: 2rem;
   width: 100%;
-  max-width: 400px;
+  max-width: 25rem;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1.25rem 3.75rem rgba(0, 0, 0, 0.3);
   border: 3px solid transparent;
 }
 
@@ -103,8 +104,8 @@ const emit = defineEmits<{
 }
 
 .alert-icon {
-  font-size: 56px;
-  margin-bottom: 16px;
+  font-size: clamp(2.5rem, 8cqi, 3.5rem);
+  margin-bottom: 1rem;
   animation: bounce 0.6s ease;
 }
 
@@ -114,30 +115,30 @@ const emit = defineEmits<{
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-0.625rem);
   }
 }
 
 .alert-title {
-  margin: 0 0 12px 0;
-  font-size: 24px;
+  margin: 0 0 0.75rem 0;
+  font-size: clamp(1.25rem, 4cqi, 1.75rem);
   font-weight: 700;
   color: var(--text-primary);
 }
 
 .alert-message {
-  margin: 0 0 24px 0;
+  margin: 0 0 1.5rem 0;
   color: var(--text-secondary);
   line-height: 1.6;
-  font-size: 16px;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
 }
 
 .alert-button {
   width: 100%;
-  padding: 14px 24px;
+  padding: 0.875rem 1.5rem;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 0.75rem;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -146,8 +147,8 @@ const emit = defineEmits<{
 }
 
 .alert-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-0.125rem);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
 }
 
 .alert-content.warning .alert-button {
@@ -184,24 +185,12 @@ const emit = defineEmits<{
 
 .modal-enter-from .alert-content,
 .modal-leave-to .alert-content {
-  transform: scale(0.9) translateY(20px);
+  transform: scale(0.9) translateY(1.25rem);
 }
 
 @media (max-width: 768px) {
   .alert-content {
-    padding: 28px;
-  }
-
-  .alert-icon {
-    font-size: 48px;
-  }
-
-  .alert-title {
-    font-size: 20px;
-  }
-
-  .alert-message {
-    font-size: 15px;
+    padding: 1.75rem;
   }
 }
 </style>

@@ -148,7 +148,6 @@ function saveConfiguration() {
             </div>
             <div>
               <h3 id="needs-label">{{ t.configView.needs }}</h3>
-              <p>{{ t.configView.needsDesc }}</p>
             </div>
           </div>
           <span class="percentage" aria-live="polite"
@@ -180,7 +179,6 @@ function saveConfiguration() {
             </div>
             <div>
               <h3 id="expenses-label">{{ t.configView.expenses }}</h3>
-              <p>{{ t.configView.expensesDesc }}</p>
             </div>
           </div>
           <span class="percentage" aria-live="polite"
@@ -212,7 +210,6 @@ function saveConfiguration() {
             </div>
             <div>
               <h3 id="savings-label">{{ t.configView.savings }}</h3>
-              <p>{{ t.configView.savingsDesc }}</p>
             </div>
           </div>
           <span class="percentage" aria-live="polite"
@@ -285,64 +282,65 @@ function saveConfiguration() {
 
 <style scoped>
 .configuration-view {
-  max-width: 800px;
+  max-width: 50rem;
   margin: 0 auto;
-  padding: 24px;
+  padding: 1.5rem;
+  container-type: inline-size;
 }
 
 .view-header h1 {
-  font-size: 32px;
+  font-size: clamp(1.5rem, 4cqi, 2.5rem);
   font-weight: 800;
-  margin: 0 0 8px 0;
+  margin: 0 0 0.5rem 0;
   color: var(--text-primary);
 }
 
 .subtitle {
-  margin: 0 0 32px 0;
+  margin: 0 0 2rem 0;
   color: var(--text-secondary);
-  font-size: 16px;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
 }
 
 .distribution-section {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 32px;
-  margin-bottom: 24px;
+  border-radius: 1.25rem;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .distribution-section h2 {
-  font-size: 20px;
+  font-size: clamp(1.125rem, 3cqi, 1.5rem);
   font-weight: 700;
-  margin: 0 0 32px 0;
+  margin: 0 0 2rem 0;
   color: var(--text-primary);
 }
 
 .slider-group {
-  margin-bottom: 32px;
-  padding: 24px;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
   background: var(--bg-primary);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: 1rem;
 }
 
 .slider-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .slider-info {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 1rem;
 }
 
 .icon-wrapper {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -363,33 +361,27 @@ function saveConfiguration() {
 }
 
 .icon-wrapper svg {
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .slider-header h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: clamp(1rem, 2.5cqi, 1.25rem);
   font-weight: 700;
   color: var(--text-primary);
 }
 
-.slider-header p {
-  margin: 4px 0 0 0;
-  font-size: 14px;
-  color: var(--text-secondary);
-}
-
 .percentage {
-  font-size: 32px;
+  font-size: clamp(1.5rem, 4cqi, 2.25rem);
   font-weight: 800;
   color: var(--text-primary);
 }
 
 .slider {
   width: 100%;
-  height: 8px;
-  border-radius: 4px;
+  height: 0.5rem;
+  border-radius: 0.25rem;
   outline: none;
   -webkit-appearance: none;
   appearance: none;
@@ -428,12 +420,12 @@ function saveConfiguration() {
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50%;
   background: white;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 0.5rem rgba(0, 0, 0, 0.2);
   border: 3px solid currentColor;
 }
 
@@ -450,12 +442,12 @@ function saveConfiguration() {
 }
 
 .slider::-moz-range-thumb {
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50%;
   background: white;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 0.5rem rgba(0, 0, 0, 0.2);
   border: 3px solid currentColor;
 }
 
@@ -463,13 +455,13 @@ function saveConfiguration() {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 16px;
+  gap: 0.75rem;
+  padding: 1rem;
   background: rgba(239, 68, 68, 0.1);
   border: 2px solid #ef4444;
-  border-radius: 12px;
-  margin-top: 24px;
-  font-size: 18px;
+  border-radius: 0.75rem;
+  margin-top: 1.5rem;
+  font-size: clamp(1rem, 2.5cqi, 1.25rem);
   font-weight: 700;
   color: #ef4444;
 }
@@ -481,32 +473,32 @@ function saveConfiguration() {
 }
 
 .total-display svg {
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .save-button {
   width: 100%;
-  margin-top: 24px;
-  padding: 16px 24px;
+  margin-top: 1.5rem;
+  padding: 1rem 1.5rem;
   background: var(--primary-color);
   color: #0b0e14;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 0.75rem;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .save-button:hover:not(:disabled) {
   transform: translateY(-2px);
   background: var(--primary-hover);
-  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0.5rem 1.25rem rgba(16, 185, 129, 0.4);
 }
 
 .save-button:active:not(:disabled) {
@@ -519,30 +511,30 @@ function saveConfiguration() {
 }
 
 .save-button svg {
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .toast-notification {
   position: fixed;
-  bottom: 32px;
+  bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
   background: var(--primary-color);
   color: #0b0e14;
-  padding: 16px 24px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(16, 185, 129, 0.4);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
   font-weight: 600;
   z-index: 1000;
 }
 
 .toast-notification svg {
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .toast-enter-active,
@@ -553,19 +545,19 @@ function saveConfiguration() {
 .info-message {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
   background: var(--bg-primary);
   border: 2px dashed var(--border-color);
-  border-radius: 12px;
+  border-radius: 0.75rem;
   color: var(--text-secondary);
-  font-size: 14px;
-  margin-top: 16px;
+  font-size: clamp(0.75rem, 2cqi, 0.875rem);
+  margin-top: 1rem;
 }
 
 .info-message svg {
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   flex-shrink: 0;
   opacity: 0.7;
 }
@@ -573,20 +565,20 @@ function saveConfiguration() {
 .toast-enter-from,
 .toast-leave-to {
   opacity: 0;
-  transform: translateX(-50%) translateY(20px);
+  transform: translateX(-50%) translateY(1.25rem);
 }
 
 .info-section {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 24px;
-  margin: 24px 0;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
 }
 
 .info-card h3 {
-  margin: 0 0 12px 0;
-  font-size: 18px;
+  margin: 0 0 0.75rem 0;
+  font-size: clamp(1rem, 2.5cqi, 1.25rem);
   font-weight: 700;
   color: var(--text-primary);
 }
@@ -599,23 +591,35 @@ function saveConfiguration() {
 
 @media (max-width: 768px) {
   .configuration-view {
-    padding: 16px;
+    padding: 1rem;
   }
 
   .view-header h1 {
-    font-size: 24px;
+    font-size: clamp(1.25rem, 3cqi, 1.75rem);
   }
 
   .distribution-section {
-    padding: 24px 16px;
+    padding: 1.5rem 1rem;
   }
 
   .slider-group {
-    padding: 16px;
+    padding: 1rem;
   }
 
   .percentage {
-    font-size: 24px;
+    font-size: clamp(1.25rem, 3cqi, 1.75rem);
+  }
+}
+
+@media (max-width: 360px) {
+  .slider-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .slider-info {
+    flex-direction: column;
+    align-items: center;
   }
 }
 </style>

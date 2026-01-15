@@ -2,7 +2,7 @@
 import { ref, computed, inject } from "vue";
 import { useFinanceStore } from "../stores/financeStore";
 import LineChart from "../components/charts/LineChart.vue";
-import { formatCurrency } from "../utils/calculations";
+import { formatCompactCurrency } from "../utils/calculations";
 
 const store = useFinanceStore();
 const t: any = inject("translations");
@@ -94,7 +94,7 @@ function getGoalProgress(goal: any) {
     <section class="overview-section">
       <div class="overview-card main">
         <span class="label">{{ t.savingsView.currentSavings }}</span>
-        <h2 class="amount">{{ formatCurrency(currentSavings) }}</h2>
+        <h2 class="amount">{{ formatCompactCurrency(currentSavings) }}</h2>
         <div
           class="change-indicator"
           :class="{ positive: isPositiveChange, negative: !isPositiveChange }"
@@ -102,7 +102,7 @@ function getGoalProgress(goal: any) {
         >
           <span class="change-icon">{{ isPositiveChange ? "↑" : "↓" }}</span>
           <span class="change-amount">{{
-            formatCurrency(Math.abs(savingsChange))
+            formatCompactCurrency(Math.abs(savingsChange))
           }}</span>
           <span class="change-percentage"
             >({{ Math.abs(savingsChangePercentage).toFixed(1) }}%)</span
@@ -112,12 +112,14 @@ function getGoalProgress(goal: any) {
 
       <div class="overview-card">
         <span class="label">{{ t.savingsView.withdrawn }}</span>
-        <h3 class="value">{{ formatCurrency(savingsWithdrawn) }}</h3>
+        <h3 class="value">{{ formatCompactCurrency(savingsWithdrawn) }}</h3>
       </div>
 
       <div class="overview-card">
         <span class="label">{{ t.savingsView.allocated }}</span>
-        <h3 class="value">{{ formatCurrency(savingsAllocatedToGoals) }}</h3>
+        <h3 class="value">
+          {{ formatCompactCurrency(savingsAllocatedToGoals) }}
+        </h3>
       </div>
     </section>
 
@@ -143,7 +145,7 @@ function getGoalProgress(goal: any) {
           <div class="goal-header">
             <h3>{{ goal.name }}</h3>
             <span class="goal-target"
-              >Target: {{ formatCurrency(goal.targetAmount) }}</span
+              >Target: {{ formatCompactCurrency(goal.targetAmount) }}</span
             >
           </div>
           <div class="goal-progress">
@@ -161,7 +163,7 @@ function getGoalProgress(goal: any) {
               ></div>
             </div>
             <div class="progress-info">
-              <span>{{ formatCurrency(goal.currentAmount) }} saved</span>
+              <span>{{ formatCompactCurrency(goal.currentAmount) }} saved</span>
               <span>{{ Math.round(getGoalProgress(goal)) }}%</span>
             </div>
           </div>
@@ -192,7 +194,7 @@ function getGoalProgress(goal: any) {
           <div class="goal-header">
             <h3>{{ goal.name }}</h3>
             <span class="goal-target">{{
-              formatCurrency(goal.targetAmount)
+              formatCompactCurrency(goal.targetAmount)
             }}</span>
           </div>
           <div class="goal-progress">
@@ -207,7 +209,7 @@ function getGoalProgress(goal: any) {
               <div class="progress-fill completed" style="width: 100%"></div>
             </div>
             <div class="progress-info">
-              <span>{{ formatCurrency(goal.currentAmount) }} saved</span>
+              <span>{{ formatCompactCurrency(goal.currentAmount) }} saved</span>
               <span class="completed-badge">🎉 Completed</span>
             </div>
           </div>
@@ -296,13 +298,16 @@ function getGoalProgress(goal: any) {
             <div class="info-box">
               <p>
                 {{ t.savingsView.availableSavings }}:
-                <strong>{{ formatCurrency(currentSavings) }}</strong>
+                <strong>{{ formatCompactCurrency(currentSavings) }}</strong>
               </p>
               <p>
                 {{ t.savingsView.goalProgress }}:
                 <strong
-                  >{{ formatCurrency(selectedGoal?.currentAmount || 0) }} /
-                  {{ formatCurrency(selectedGoal?.targetAmount || 0) }}</strong
+                  >{{ formatCompactCurrency(selectedGoal?.currentAmount || 0) }}
+                  /
+                  {{
+                    formatCompactCurrency(selectedGoal?.targetAmount || 0)
+                  }}</strong
                 >
               </p>
             </div>
@@ -347,38 +352,39 @@ function getGoalProgress(goal: any) {
 
 <style scoped>
 .savings-view {
-  max-width: 1200px;
+  max-width: 75rem;
   margin: 0 auto;
-  padding: 24px;
+  padding: 1.5rem;
+  container-type: inline-size;
 }
 
 .view-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 32px;
+  margin-bottom: 2rem;
 }
 
 .view-header h1 {
-  font-size: 32px;
+  font-size: clamp(1.5rem, 4cqi, 2.5rem);
   font-weight: 800;
-  margin: 0 0 8px 0;
+  margin: 0 0 0.5rem 0;
   color: var(--text-primary);
 }
 
 .subtitle {
   margin: 0;
   color: var(--text-secondary);
-  font-size: 16px;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
 }
 
 .button-primary {
-  padding: 12px 24px;
+  padding: 0.75rem 1.5rem;
   background: #10b981;
-  color: white;
+  color: var(--text-primary-2);
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 0.75rem;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -397,15 +403,15 @@ function getGoalProgress(goal: any) {
 .overview-section {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
-  gap: 24px;
-  margin-bottom: 32px;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .overview-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 24px;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
   position: relative;
   overflow: hidden;
 }
@@ -421,7 +427,7 @@ function getGoalProgress(goal: any) {
   position: absolute;
   top: 0;
   left: 0;
-  width: 4px;
+  width: 0.25rem;
   height: 100%;
   background: var(--primary-color);
 }
@@ -431,7 +437,7 @@ function getGoalProgress(goal: any) {
 }
 
 .label {
-  font-size: 14px;
+  font-size: clamp(0.75rem, 2cqi, 0.875rem);
   opacity: 0.8;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -439,26 +445,26 @@ function getGoalProgress(goal: any) {
 }
 
 .amount {
-  font-size: 42px;
+  font-size: clamp(1.875rem, 5cqi, 3rem);
   font-weight: 800;
-  margin: 12px 0;
+  margin: 0.75rem 0;
 }
 
 .value {
-  font-size: 28px;
+  font-size: clamp(1.25rem, 3cqi, 1.75rem);
   font-weight: 700;
-  margin: 12px 0 0 0;
+  margin: 0.75rem 0 0 0;
   color: var(--text-primary);
 }
 
 .change-indicator {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 12px;
-  padding: 8px 12px;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.75rem;
   background: rgba(16, 185, 129, 0.1);
-  border-radius: 8px;
+  border-radius: 0.5rem;
   width: fit-content;
 }
 
@@ -472,7 +478,7 @@ function getGoalProgress(goal: any) {
 }
 
 .change-icon {
-  font-size: 20px;
+  font-size: clamp(1rem, 2.5cqi, 1.5rem);
   font-weight: 800;
 }
 
@@ -487,18 +493,18 @@ function getGoalProgress(goal: any) {
 .chart-section {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 24px;
-  margin-bottom: 32px;
-  height: 450px;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  height: 28.125rem;
   display: flex;
   flex-direction: column;
 }
 
 .chart-section h2 {
-  font-size: 20px;
+  font-size: clamp(1.125rem, 3cqi, 1.5rem);
   font-weight: 700;
-  margin: 0 0 20px 0;
+  margin: 0 0 1.25rem 0;
   color: var(--text-primary);
   flex-shrink: 0;
 }
@@ -510,53 +516,53 @@ function getGoalProgress(goal: any) {
 
 .empty-chart {
   background: var(--card-bg);
-  border-radius: 20px;
-  padding: 48px;
+  border-radius: 1.25rem;
+  padding: 3rem;
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 2rem;
 }
 
 .empty-chart p {
   margin: 0;
   color: var(--text-secondary);
-  font-size: 16px;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
   line-height: 1.6;
 }
 
 .goals-section {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 24px;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
 }
 
 .goals-section h2 {
-  font-size: 20px;
+  font-size: clamp(1.125rem, 3cqi, 1.5rem);
   font-weight: 700;
-  margin: 0 0 20px 0;
+  margin: 0 0 1.25rem 0;
   color: var(--text-primary);
 }
 
 .goals-list {
   display: grid;
-  gap: 16px;
+  gap: 1rem;
 }
 
 .goal-card {
   background: var(--bg-primary);
-  border-radius: 16px;
-  padding: 20px;
+  border-radius: 1rem;
+  padding: 1.25rem;
   border: 1px solid var(--border-color);
 }
 
 .allocate-button {
-  margin-top: 16px;
+  margin-top: 1rem;
   width: 100%;
-  padding: 12px;
+  padding: 0.75rem;
   background: var(--primary-color);
   color: #0b0e14;
   border: none;
-  border-radius: 12px;
+  border-radius: 0.75rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -565,7 +571,7 @@ function getGoalProgress(goal: any) {
 .allocate-button:hover:not(:disabled) {
   background: var(--primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px -4px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0.5rem 1rem -0.25rem rgba(16, 185, 129, 0.4);
 }
 
 .allocate-button:disabled {
@@ -577,48 +583,48 @@ function getGoalProgress(goal: any) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .goal-header h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: clamp(1rem, 2.5cqi, 1.25rem);
   font-weight: 700;
   color: var(--text-primary);
 }
 
 .goal-target {
-  font-size: 14px;
+  font-size: clamp(0.75rem, 2cqi, 0.875rem);
   color: var(--text-secondary);
   font-weight: 600;
 }
 
 .goal-progress .progress-bar {
-  height: 10px;
+  height: 0.625rem;
   background: var(--progress-bg);
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   overflow: hidden;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .progress-fill {
   height: 100%;
   background: var(--primary-color);
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 0.625rem rgba(16, 185, 129, 0.3);
 }
 
 .progress-info {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: clamp(0.75rem, 2cqi, 0.875rem);
   color: var(--text-secondary);
   font-weight: 600;
 }
 
 .completed-section {
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 
 .completed-section h2 {
@@ -645,10 +651,10 @@ function getGoalProgress(goal: any) {
 }
 
 .completed-date {
-  margin-top: 12px;
-  padding-top: 12px;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
   border-top: 1px solid var(--border-color);
-  font-size: 12px;
+  font-size: clamp(0.625rem, 1.5cqi, 0.75rem);
   color: var(--text-secondary);
   text-align: center;
 }
@@ -660,47 +666,47 @@ function getGoalProgress(goal: any) {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(0.25rem);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 20px;
+  padding: 1.25rem;
 }
 
 .modal-content {
   background: var(--modal-bg);
-  border-radius: 20px;
-  padding: 32px;
+  border-radius: 1.25rem;
+  padding: 2rem;
   width: 100%;
-  max-width: 400px;
+  max-width: 25rem;
 }
 
 .modal-content h3 {
-  margin: 0 0 20px 0;
-  font-size: 24px;
+  margin: 0 0 1.25rem 0;
+  font-size: clamp(1.25rem, 3cqi, 1.75rem);
   font-weight: 700;
   color: var(--text-primary);
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   font-weight: 600;
   color: var(--text-primary);
-  font-size: 14px;
+  font-size: clamp(0.75rem, 2cqi, 0.875rem);
 }
 
 .input-field {
   width: 100%;
-  padding: 12px 16px;
+  padding: 0.75rem 1rem;
   border: 2px solid var(--border-color);
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 0.75rem;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
   color: var(--text-primary);
   background: var(--input-bg);
 }
@@ -713,15 +719,15 @@ function getGoalProgress(goal: any) {
 .info-box {
   background: var(--input-bg);
   border: 2px solid var(--border-color);
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 20px;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .info-box p {
-  margin: 8px 0;
+  margin: 0.5rem 0;
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: clamp(0.75rem, 2cqi, 0.875rem);
 }
 
 .info-box strong {
@@ -731,17 +737,17 @@ function getGoalProgress(goal: any) {
 
 .modal-actions {
   display: flex;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .button-secondary {
   flex: 1;
-  padding: 12px 24px;
+  padding: 0.75rem 1.5rem;
   background: var(--button-secondary-bg);
   color: var(--text-primary);
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 0.75rem;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -763,16 +769,16 @@ function getGoalProgress(goal: any) {
 
 @media (max-width: 768px) {
   .savings-view {
-    padding: 16px;
+    padding: 1rem;
   }
 
   .view-header {
     flex-direction: column;
-    gap: 16px;
+    gap: 1rem;
   }
 
   .view-header h1 {
-    font-size: 24px;
+    font-size: clamp(1.25rem, 3cqi, 1.75rem);
   }
 
   .overview-section {
@@ -780,7 +786,53 @@ function getGoalProgress(goal: any) {
   }
 
   .amount {
-    font-size: 32px;
+    font-size: clamp(1.5rem, 4cqi, 2.25rem);
+  }
+}
+
+@media (max-width: 360px) {
+  .change-indicator {
+    padding: 0.375rem 0.5rem;
+    gap: 0.25rem;
+    font-size: 0.625rem;
+  }
+
+  .change-icon {
+    font-size: 0.75rem;
+  }
+
+  .change-amount {
+    font-size: 0.625rem;
+  }
+
+  .change-percentage {
+    font-size: 0.5625rem;
+  }
+
+  /* Goal cards - título y monto uno debajo del otro */
+  .goal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Goal cards textos pequeños */
+  .goal-target {
+    font-size: 0.5rem;
+  }
+
+  .progress-info {
+    font-size: 0.5rem;
+  }
+
+  .progress-info span {
+    font-size: 0.5rem;
+  }
+
+  .allocate-button {
+    font-size: 0.5rem;
+    padding: 0.5rem 0.75rem;
   }
 }
 </style>

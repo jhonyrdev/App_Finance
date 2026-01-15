@@ -163,44 +163,50 @@ function cancelLimit() {
     </Teleport>
 
     <!-- Expense Modal -->
-    <ExpenseModal :show="showExpenseModal" @close="showExpenseModal = false" />
+    <ExpenseModal
+      :show="showExpenseModal"
+      default-type="need"
+      custom-title="Registro de necesidades"
+      @close="showExpenseModal = false"
+    />
   </div>
 </template>
 
 <style scoped>
 .needs-view {
-  max-width: 1200px;
+  max-width: 75rem;
   margin: 0 auto;
-  padding: 24px;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
+  container-type: inline-size;
 }
 
 .view-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 32px;
+  margin-bottom: 2rem;
 }
 
 .view-header h1 {
-  font-size: 32px;
+  font-size: clamp(1.5rem, 4cqi, 2.5rem);
   font-weight: 800;
-  margin: 0 0 8px 0;
+  margin: 0 0 0.5rem 0;
   color: var(--text-primary);
 }
 
 .subtitle {
   margin: 0;
   color: var(--text-secondary);
-  font-size: 16px;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
 }
 
 .button-primary {
-  padding: 12px 24px;
+  padding: 0.75rem 1.5rem;
   background: var(--primary-color);
   color: #0b0e14;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 0.75rem;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -209,30 +215,30 @@ function cancelLimit() {
 .button-primary:hover {
   background: var(--primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px -5px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0.5rem 1.25rem -0.3125rem rgba(16, 185, 129, 0.4);
 }
 
 .charts-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 24px;
-  margin-bottom: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(21.875rem, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .chart-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 24px;
-  height: 450px;
+  border-radius: 1.25rem;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
+  height: 28.125rem;
   display: flex;
   flex-direction: column;
 }
 
 .chart-card h3 {
-  font-size: 18px;
+  font-size: clamp(1rem, 2.5cqi, 1.25rem);
   font-weight: 700;
-  margin: 0 0 20px 0;
+  margin: 0 0 1.25rem 0;
   color: var(--text-primary);
   flex-shrink: 0;
 }
@@ -245,40 +251,40 @@ function cancelLimit() {
 .empty-chart {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 48px;
+  border-radius: 1.25rem;
+  padding: clamp(1.5rem, 5vw, 3rem);
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 2rem;
 }
 
 .empty-chart p {
   margin: 0;
   color: var(--text-secondary);
-  font-size: 16px;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
 }
 
 .categories-section {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 24px;
+  border-radius: clamp(0.75rem, 3vw, 1.25rem);
+  padding: clamp(0.75rem, 3vw, 1.5rem);
 }
 
 .categories-section h2 {
-  font-size: 20px;
+  font-size: clamp(1.125rem, 3cqi, 1.5rem);
   font-weight: 700;
-  margin: 0 0 20px 0;
+  margin: 0 0 1.25rem 0;
   color: var(--text-primary);
 }
 
 .set-limit-button {
-  margin-top: 8px;
-  padding: 8px 16px;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
   background: var(--button-secondary-bg);
   color: var(--text-primary);
   border: none;
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: 0.5rem;
+  font-size: clamp(0.75rem, 2cqi, 0.875rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -295,38 +301,38 @@ function cancelLimit() {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(0.25rem);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 20px;
+  padding: 1.25rem;
 }
 
 .modal-content {
   background: var(--modal-bg);
-  border-radius: 20px;
-  padding: 32px;
+  border-radius: 1.25rem;
+  padding: clamp(1rem, 4vw, 2rem);
   width: 100%;
-  max-width: 400px;
+  max-width: 25rem;
 }
 
 .modal-content h3 {
-  margin: 0 0 20px 0;
-  font-size: 24px;
+  margin: 0 0 1.25rem 0;
+  font-size: clamp(1.25rem, 3cqi, 1.75rem);
   font-weight: 700;
   color: var(--text-primary);
 }
 
 .input-field {
   width: 100%;
-  padding: 12px 16px;
+  padding: 0.75rem 1rem;
   border: 2px solid var(--border-color);
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 0.75rem;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
   color: var(--text-primary);
   background: var(--input-bg);
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .input-field:focus {
@@ -337,17 +343,17 @@ function cancelLimit() {
 
 .modal-actions {
   display: flex;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .button-secondary {
   flex: 1;
-  padding: 12px 24px;
+  padding: 0.75rem 1.5rem;
   background: var(--button-secondary-bg);
   color: var(--text-primary);
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 0.75rem;
+  font-size: clamp(0.875rem, 2.5cqi, 1rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -368,17 +374,13 @@ function cancelLimit() {
 }
 
 @media (max-width: 768px) {
-  .needs-view {
-    padding: 16px;
-  }
-
   .view-header {
     flex-direction: column;
-    gap: 16px;
+    gap: 1rem;
   }
 
   .view-header h1 {
-    font-size: 24px;
+    font-size: clamp(1.25rem, 3cqi, 1.75rem);
   }
 
   .charts-section {

@@ -1,15 +1,38 @@
-import type { Category, Transaction, BudgetStatus } from '../types'
-import { BUDGET_THRESHOLDS } from './constants'
+import type { Category, Transaction, BudgetStatus } from "../types";
+import { BUDGET_THRESHOLDS } from "./constants";
 
 /**
  * Format number as currency
  */
 export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('es-PE', {
-    style: 'currency',
-    currency: 'PEN',
-    minimumFractionDigits: 2
-  }).format(amount)
+  return new Intl.NumberFormat("es-PE", {
+    style: "currency",
+    currency: "PEN",
+    minimumFractionDigits: 2,
+  }).format(amount);
+}
+
+/**
+ * Format large numbers with abbreviations (K, M, B, T)
+ */
+export function formatNumber(num: number): string {
+  if (num >= 1e12) return (num / 1e12).toFixed(2) + "T";
+  if (num >= 1e9) return (num / 1e9).toFixed(2) + "B";
+  if (num >= 1e6) return (num / 1e6).toFixed(2) + "M";
+  if (num >= 1e3) return (num / 1e3).toFixed(2) + "K";
+  return num.toString();
+}
+
+/**
+ * Format large currency amounts with abbreviations
+ */
+export function formatCompactCurrency(amount: number): string {
+  const symbol = "S/ "; // PEN currency symbol
+  if (amount >= 1e12) return symbol + (amount / 1e12).toFixed(2) + "T";
+  if (amount >= 1e9) return symbol + (amount / 1e9).toFixed(2) + "B";
+  if (amount >= 1e6) return symbol + (amount / 1e6).toFixed(2) + "M";
+  if (amount >= 1e3) return symbol + (amount / 1e3).toFixed(2) + "K";
+  return formatCurrency(amount);
 }
 
 /**
@@ -20,8 +43,8 @@ export function calculateCategorySpent(
   transactions: Transaction[]
 ): number {
   return transactions
-    .filter(t => t.categoryId === categoryId)
-    .reduce((sum, t) => sum + t.amount, 0)
+    .filter((t) => t.categoryId === categoryId)
+    .reduce((sum, t) => sum + t.amount, 0);
 }
 
 /**
@@ -32,20 +55,20 @@ export function calculateBudgetStatus(
   limit: number
 ): BudgetStatus {
   if (limit === 0) {
-    return { status: 'ok', percentage: 0, remaining: 0 }
+    return { status: "ok", percentage: 0, remaining: 0 };
   }
 
-  const percentage = (spent / limit) * 100
-  const remaining = limit - spent
+  const percentage = (spent / limit) * 100;
+  const remaining = limit - spent;
 
-  let status: 'ok' | 'warning' | 'danger' = 'ok'
+  let status: "ok" | "warning" | "danger" = "ok";
   if (percentage >= BUDGET_THRESHOLDS.danger * 100) {
-    status = 'danger'
+    status = "danger";
   } else if (percentage >= BUDGET_THRESHOLDS.warning * 100) {
-    status = 'warning'
+    status = "warning";
   }
 
-  return { status, percentage, remaining }
+  return { status, percentage, remaining };
 }
 
 /**
@@ -53,50 +76,50 @@ export function calculateBudgetStatus(
  */
 export function calculateTypeTotal(
   categories: Category[],
-  type: 'need' | 'expense' | 'saving'
+  type: "need" | "expense" | "saving"
 ): number {
   return categories
-    .filter(c => c.type === type)
-    .reduce((sum, c) => sum + c.spent, 0)
+    .filter((c) => c.type === type)
+    .reduce((sum, c) => sum + c.spent, 0);
 }
 
 /**
  * Calculate percentage from total
  */
 export function calculatePercentage(part: number, total: number): number {
-  if (total === 0) return 0
-  return Math.round((part / total) * 100)
+  if (total === 0) return 0;
+  return Math.round((part / total) * 100);
 }
 
 /**
  * Format date for display
  */
 export function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
-  }).format(new Date(date))
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(new Date(date));
 }
 
 /**
  * Format relative time (e.g., "2 days ago")
  */
 export function formatRelativeTime(date: Date): string {
-  const now = new Date()
-  const diffInMs = now.getTime() - new Date(date).getTime()
-  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24))
+  const now = new Date();
+  const diffInMs = now.getTime() - new Date(date).getTime();
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 
-  if (diffInDays === 0) return 'Today'
-  if (diffInDays === 1) return 'Yesterday'
-  if (diffInDays < 7) return `${diffInDays} days ago`
-  if (diffInDays < 30) return `${Math.floor(diffInDays / 7)} weeks ago`
-  return formatDate(date)
+  if (diffInDays === 0) return "Today";
+  if (diffInDays === 1) return "Yesterday";
+  if (diffInDays < 7) return `${diffInDays} days ago`;
+  if (diffInDays < 30) return `${Math.floor(diffInDays / 7)} weeks ago`;
+  return formatDate(date);
 }
 
 /**
  * Generate unique ID
  */
 export function generateId(): string {
-  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
