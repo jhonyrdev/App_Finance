@@ -163,7 +163,12 @@ function cancelLimit() {
     </Teleport>
 
     <!-- Expense Modal -->
-    <ExpenseModal :show="showExpenseModal" @close="showExpenseModal = false" />
+    <ExpenseModal
+      :show="showExpenseModal"
+      default-type="need"
+      custom-title="Registro de necesidades"
+      @close="showExpenseModal = false"
+    />
   </div>
 </template>
 

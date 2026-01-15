@@ -351,8 +351,8 @@ textarea.input-field {
 }
 
 .button-primary {
-  background: #10b981;
-  color: white;
+  background: var(--primary-color);
+  color: var(--text-primary-2);
 }
 
 .button-primary:hover:not(:disabled) {

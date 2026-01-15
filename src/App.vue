@@ -165,12 +165,10 @@ const user = {
 
 <template>
   <div class="app-container">
-    <!-- Skip Link for Accessibility -->
     <a href="#main-content" class="skip-link">
       {{ t.a11y.skipToContent }}
     </a>
 
-    <!-- Sidebar -->
     <aside
       v-if="isAuthenticated"
       class="sidebar"
@@ -559,7 +557,6 @@ const user = {
 
 /* Main Content Styling */
 .main-content {
-  padding: 32px;
   flex: 1;
 }
 

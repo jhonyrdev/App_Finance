@@ -375,7 +375,7 @@ function getGoalProgress(goal: any) {
 .button-primary {
   padding: 12px 24px;
   background: #10b981;
-  color: white;
+  color: var(--text-primary-2);
   border: none;
   border-radius: 12px;
   font-size: 16px;

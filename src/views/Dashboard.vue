@@ -162,7 +162,6 @@ function showSetBalance() {
       </button>
     </section>
 
-    <!-- Floating Add Expense Button -->
     <button
       v-if="hasBalance"
       class="fab"
@@ -211,7 +210,11 @@ function showSetBalance() {
       </div>
     </section>
 
-    <ExpenseModal :show="showExpenseModal" @close="showExpenseModal = false" />
+    <ExpenseModal
+      :show="showExpenseModal"
+      custom-title="Registra tus movimientos"
+      @close="showExpenseModal = false"
+    />
     <IncomeModal :show="showIncomeModal" @close="showIncomeModal = false" />
   </div>
 </template>

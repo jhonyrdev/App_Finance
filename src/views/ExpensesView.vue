@@ -193,7 +193,12 @@ function cancelLimit() {
     </Teleport>
 
     <!-- Expense Modal -->
-    <ExpenseModal :show="showExpenseModal" @close="showExpenseModal = false" />
+    <ExpenseModal
+      :show="showExpenseModal"
+      default-type="expense"
+      custom-title="Registro de gasto"
+      @close="showExpenseModal = false"
+    />
   </div>
 </template>
 
@@ -242,7 +247,7 @@ function cancelLimit() {
   left: 0;
   width: 4px;
   height: 100%;
-  background: #f59e0b; /* Warning/Hot accent */
+  background: #f59e0b; 
 }
 
 .highlight-section h3 {
@@ -288,9 +293,7 @@ function cancelLimit() {
   font-weight: 600;
   margin: 8px 0;
 }
-
-/* Removed redundant category-amount since it's defined above */
-
+  
 .button-primary {
   padding: 12px 24px;
   background: var(--primary-color);
