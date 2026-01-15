@@ -19,13 +19,11 @@ const emit = defineEmits<{
 const store = useFinanceStore();
 const t: any = inject("translations");
 
-/* ================= STATE ================= */
 const amount = ref<number | "">("");
 const type = ref<TransactionType>("expense");
 const categoryId = ref("");
 const description = ref("");
 
-/* ================= COMPUTED ================= */
 const availableCategories = computed(() => {
   return type.value === "need"
     ? store.needsCategories
@@ -36,7 +34,6 @@ const selectedCategory = computed(() =>
   store.getCategoryById(categoryId.value)
 );
 
-/* ================= ACTIONS ================= */
 async function validateAndSubmit() {
   if (!amount.value || !categoryId.value) return;
 
@@ -58,7 +55,6 @@ async function validateAndSubmit() {
   const requiredFromSavings = expenseAmount - allocatedBudget;
   const availableSavings = store.currentSavings;
 
-  /* ====== USAR SAVINGS ====== */
   if (availableSavings >= requiredFromSavings) {
     const result = await Swal.fire({
       icon: "warning",

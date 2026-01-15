@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, inject } from "vue";
+import { computed, ref, inject } from "vue";
+import type { ComputedRef } from "vue";
 import { useRouter } from "vue-router";
 import { useFinanceStore } from "../stores/financeStore";
 import Swal from "sweetalert2";
@@ -16,10 +17,16 @@ const emit = defineEmits<{
 
 const store = useFinanceStore();
 const router = useRouter();
-const t: any = inject("translations");
-
+const t = inject<ComputedRef<any>>(
+  "translations",
+  computed(() => ({}))
+);
 const amount = ref<number | "">("");
 const description = ref("");
+
+if (!t) {
+  throw new Error("Translations provider not found");
+}
 
 async function submitIncome() {
   if (!amount.value) return;
@@ -35,22 +42,32 @@ async function submitIncome() {
     return;
   }
 
+  if (!t.value?.incomeModal?.swal) {
+  console.error("Translations not loaded properly");
+  store.addIncome(Number(amount.value), description.value);
+  resetForm();
+  emit("confirm");
+  emit("close");
+  return;
+}
+
+
   // Mostrar diálogo con SweetAlert2
   const result = await Swal.fire({
-    title: t.incomeModal.swal.title,
+    title: t?.value.incomeModal.swal.title,
     html: `
-      <p style="margin-bottom: 20px;">${t.incomeModal.swal.text}</p>
+      <p style="margin-bottom: 20px;">${t?.value.incomeModal.swal.text}</p>
       <div style="background: var(--bg-primary); padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--border-color); color: var(--text-primary);">
         <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-          <span>🏠 ${t.incomeModal.swal.needs}:</span>
+          <span>${t?.value.incomeModal.swal.needs}:</span>
           <strong>${distribution.needs}%</strong>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-          <span>🛒 ${t.incomeModal.swal.expenses}:</span>
+          <span>${t.value.incomeModal.swal.expenses}:</span>
           <strong>${distribution.expenses}%</strong>
         </div>
         <div style="display: flex; justify-content: space-between;">
-          <span>💰 ${t.incomeModal.swal.savings}:</span>
+          <span>${t?.value.incomeModal.swal.savings}:</span>
           <strong>${distribution.savings}%</strong>
         </div>
       </div>
@@ -58,9 +75,9 @@ async function submitIncome() {
     icon: "question",
     showCancelButton: true,
     showDenyButton: true,
-    confirmButtonText: t.incomeModal.swal.continue,
-    denyButtonText: t.incomeModal.swal.config,
-    cancelButtonText: t.incomeModal.swal.cancel,
+    confirmButtonText: t?.value.incomeModal.swal.continue,
+    denyButtonText: t.value.incomeModal.swal.config,
+    cancelButtonText: t?.value.incomeModal.swal.cancel,
     confirmButtonColor: "#10b981",
     denyButtonColor: "#059669",
     cancelButtonColor: "#6b7280",
@@ -69,13 +86,12 @@ async function submitIncome() {
   });
 
   if (result.isConfirmed) {
-    // Continuar: distribuir inmediatamente
     store.addIncome(Number(amount.value), description.value);
     store.distributePendingIncome();
 
     Swal.fire({
-      title: t.incomeModal.swal.successTitle,
-      text: t.incomeModal.swal.successText,
+      title: t?.value.incomeModal.swal.successTitle,
+      text: t.value.incomeModal.swal.successText,
       icon: "success",
       timer: 2000,
       showConfirmButton: false,
